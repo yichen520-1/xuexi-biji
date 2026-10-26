@@ -1,0 +1,118 @@
+# computed 计算属性
+
+> 课程范围：P117 至最后（用户指定）。未取得视频逐集标题与字幕，本篇为自主编写的知识体系笔记，不代表逐集内容已核验。
+> 示例版本：Vue 3.5.13；版本固定用于复现，不表示最新版本。
+
+## 学习目标与使用场景
+
+把派生数据写成计算属性，理解依赖缓存与 methods 的区别。
+
+## 先把原理讲清楚
+
+当一个值能由其他状态推导出来，例如购物车总价，就通常不需要再保存一份可手动修改的 total。保存两份来源相同的数据会产生同步问题：价格改了，total 忘记改，界面就互相矛盾。
+
+computed 接收一个返回结果的 getter。getter 执行时读取的响应式状态会成为依赖；依赖没变，多次读取可以复用缓存。methods 则是在调用时重新执行，适合事件处理或需要传入参数的操作。
+
+计算属性应该尽量是纯计算：不要发送网络请求、写入 localStorage 或修改源数组。纯 getter 更容易预测、测试和重用。默认 computed 是只读派生值；确实需要双向映射时才能提供 get/set，而不是为了规避只读报错随便添加 setter。
+
+同样的思路适用于搜索结果、已完成数量、按钮是否可用。判断依据是“这个值能否由现有状态直接算出”；如果可以，优先 computed。如果是“数据变化之后要做一件外部事情”，才考虑 watch。
+
+## 运行方式
+
+直接打开同目录下的 [配套演示](示例/07-computed计算属性.html)。运行库放在示例/vendor，已本地保存，普通示例不需要联网。Obsidian 的代码块用于阅读，不会自动执行 HTML。也可以把下面整段内容保存到示例目录中的新 HTML 文件；改变位置时需要相应调整运行库相对路径。
+
+## 完整代码演示
+
+```html
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>computed 计算属性</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>购物清单</h1><label>单价 <input type="number" min="0" v-model.number="price"></label><label>数量 <input type="number" min="0" v-model.number="quantity"></label><p>总价：{{ total.toFixed(2) }} 元</p><p>是否包邮：{{ total >= 100 ? '是' : '否' }}</p>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+const { createApp, ref, computed } = Vue;
+createApp({ setup() {
+  const price = ref(20), quantity = ref(2);
+  const total = computed(() => {
+    const p = Number(price.value), q = Number(quantity.value);
+    return Number.isFinite(p) && Number.isFinite(q) ? p * q : 0;
+  });
+  return {price, quantity, total};
+}}).mount('#app');
+</script>
+</body>
+</html>
+```
+
+## 按执行顺序解释
+
+1. price 和 quantity 是源状态，total 是派生状态。
+2. getter 读取 .value，因此 Vue 知道哪些值变化后缓存需要失效。
+3. Number.isFinite 避免非法输入让页面出现 NaN。真实金额系统可用整数分减少浮点精度误差。
+4. 模板自动解包 total，因此可以直接调用 total.toFixed(2)。
+
+## 预期结果与验证步骤
+
+初始总价 40.00 元；数量改为 5 后总价为 100.00 元并显示包邮。
+
+操作时同时打开浏览器开发者工具：Elements 查看模板生成的节点，Console 查看是否有语法错误或 Vue 警告。若页面显示双大括号原文，优先检查运行库路径、脚本加载顺序和挂载目标。
+
+## 图解
+
+```mermaid
+flowchart TD
+  源状态 --> 响应式依赖 --> 计算缓存 --> 模板读取
+```
+
+## 注意事项与易错点
+
+- Date.now() 不是响应式依赖，单独 computed(() => Date.now()) 不会自动按时刷新。
+- 不要在 getter 里写 total.value 或修改自己依赖的状态。
+- 金额乘法涉及二进制浮点精度；展示保留两位不等于业务计算已经精确。
+
+## 动手练习
+
+加入 0 到 1 之间的折扣比例，生成折后价格计算属性。
+
+<details>
+<summary>参考答案与思路（先自己尝试）</summary>
+
+```js
+const discount = ref(0.8);
+const discounted = computed(() => total.value * discount.value);
+// setup 返回 discount 和 discounted，模板显示 discounted.toFixed(2)
+```
+
+练习片段需要放入本篇已有的模板或 setup 对应位置，不是另一份独立文件。修改后重做上面的验证步骤，并检查空值、重复操作和恢复状态。
+
+</details>
+
+## 复习问题
+
+1. 本篇中哪些数据是真正的源状态，哪些是推导结果或 DOM 表示？
+2. 如果页面没有按预期更新，应该先检查运行环境、API 版本还是依赖关系？结合示例说明。
+3. 能否不用背代码，用自己的话描述图中每一步的输入和输出？
+
+
+
+## 相关笔记
+
+[[前端/VUE/06-列表渲染与稳定key|上一篇：列表渲染与稳定 key]] · [[前端/VUE/08-watch与副作用清理|下一篇：watch 与副作用清理]] · [[前端/VUE/00-Vue学习索引]]
+
+## 官方参考与来源边界
+
+- [Vue 3 中文指南](https://cn.vuejs.org/guide/introduction.html)
+- [Vue 2 中文指南](https://v2.cn.vuejs.org/v2/guide/)
+- [Vue 2 维护结束说明](https://v2.vuejs.org/eol/)
+
+以上文档用于核对 API 和版本差异；课程链接与集数只来自用户指定范围，未据此编造每集标题或台词。

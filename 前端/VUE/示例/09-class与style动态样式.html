@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>class 与 style 动态样式</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>状态样式</h1><button class="toggle" :class="{active: selected}" :aria-pressed="selected" @click="selected = !selected">{{ selected ? '已选中' : '未选中' }}</button><label>进度 <input type="range" min="0" max="100" v-model.number="progress"></label><div style="background:#ddd;height:24px"><div :style="{width: progress + '%', height:'100%', backgroundColor:'#15803d'}"></div></div><p>{{ progress }}%</p>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+const {createApp, ref} = Vue;
+createApp({setup(){
+  const selected = ref(false), progress = ref(40);
+  return {selected, progress};
+}}).mount('#app');
+</script>
+</body>
+</html>

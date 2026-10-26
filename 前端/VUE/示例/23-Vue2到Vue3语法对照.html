@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vue 2 到 Vue 3 语法对照</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>版本检查</h1><p>当前演示运行库：{{ version }}</p><p>组织风格：Options API，运行版本：Vue 3</p><button @click="count++">{{ count }}</button>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+Vue.createApp({
+  data(){return {version:Vue.version,count:0};},
+  methods:{reset(){this.count=0;}}
+}).mount('#app');
+</script>
+</body>
+</html>

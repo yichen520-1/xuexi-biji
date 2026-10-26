@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>computed 计算属性</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>购物清单</h1><label>单价 <input type="number" min="0" v-model.number="price"></label><label>数量 <input type="number" min="0" v-model.number="quantity"></label><p>总价：{{ total.toFixed(2) }} 元</p><p>是否包邮：{{ total >= 100 ? '是' : '否' }}</p>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+const { createApp, ref, computed } = Vue;
+createApp({ setup() {
+  const price = ref(20), quantity = ref(2);
+  const total = computed(() => {
+    const p = Number(price.value), q = Number(quantity.value);
+    return Number.isFinite(p) && Number.isFinite(q) ? p * q : 0;
+  });
+  return {price, quantity, total};
+}}).mount('#app');
+</script>
+</body>
+</html>

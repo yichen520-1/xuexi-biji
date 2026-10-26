@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>事件绑定与修饰符</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>事件练习</h1><p>{{ count }}</p><button @click="increment(2, $event)">加二</button><form @submit.prevent="save"><label>名字 <input v-model="name" @keyup.enter="hint = '按下了 Enter'"></label><button>保存</button></form><p role="status">{{ hint }}</p>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+const { createApp, ref } = Vue;
+createApp({ setup() {
+  const count = ref(0), name = ref(''), hint = ref('等待操作');
+  function increment(step, event) {
+    count.value += step;
+    hint.value = '点击了 ' + event.currentTarget.textContent;
+  }
+  function save() { hint.value = '已保存：' + name.value; }
+  return { count, name, hint, increment, save };
+}}).mount('#app');
+</script>
+</body>
+</html>

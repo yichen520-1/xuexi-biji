@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>组件 props 与自定义事件</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>父子计数</h1><p>父级记录：{{ total }}</p><counter-button :count="total" @increment="total++"></counter-button>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+const {createApp, ref} = Vue;
+const CounterButton = {
+  props: {count: {type: Number, required: true}},
+  emits: ['increment'],
+  methods: {increment(){this.$emit('increment');}},
+  template: '<button @click="increment">子组件请求加一：{{ count }}</button>'
+};
+createApp({
+  components: {CounterButton},
+  setup(){ const total = ref(0); return {total}; }
+}).mount('#app');
+</script>
+</body>
+</html>

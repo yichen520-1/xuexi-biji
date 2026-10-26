@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>watch 与副作用清理</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>防抖搜索模拟</h1><input v-model="query" aria-label="关键词" placeholder="快速输入"><p role="status">{{ result }}</p>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+const { createApp, ref, watch } = Vue;
+createApp({ setup() {
+  const query = ref(''), result = ref('请输入关键词');
+  watch(query, (value, oldValue, onCleanup) => {
+    result.value = value ? '等待输入停止…' : '请输入关键词';
+    const timer = setTimeout(() => {
+      if (value) result.value = '模拟搜索：' + value;
+    }, 400);
+    onCleanup(() => clearTimeout(timer));
+  });
+  return {query, result};
+}}).mount('#app');
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v-model 与表单绑定</title>
+<style>
+body{font-family:system-ui,sans-serif;line-height:1.7;margin:2rem auto;padding:0 1rem;max-width:58rem;color:#202124;background:#fff}button,input,select{font:inherit;padding:.4rem;margin:.3rem}button{cursor:pointer}label{display:inline-block;margin:.3rem}section{border:1px solid #aaa;padding:1rem;margin:1rem 0}li{margin:.4rem 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b45309}.active{background:#166534;color:#fff}nav{display:flex;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>报名表</h1><form @submit.prevent="submit"><label>姓名 <input v-model.trim="name" required></label><label>年龄 <input type="number" v-model.number="age" min="1" required></label><label><input type="checkbox" value="HTML" v-model="skills">HTML</label><label><input type="checkbox" value="Vue" v-model="skills">Vue</label><button>预览</button></form><pre>{{ preview }}</pre>
+</div>
+<script src="./vendor/vue-3.5.13.js"></script>
+<script>
+const { createApp, ref } = Vue;
+createApp({ setup() {
+  const name = ref(''), age = ref(18), skills = ref([]), preview = ref('');
+  function submit() {
+    if (!Number.isFinite(age.value) || age.value < 1) {
+      preview.value = '请填写有效年龄'; return;
+    }
+    preview.value = JSON.stringify({name: name.value, age: age.value, skills: skills.value}, null, 2);
+  }
+  return { name, age, skills, preview, submit };
+}}).mount('#app');
+</script>
+</body>
+</html>
