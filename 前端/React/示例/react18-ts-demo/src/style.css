@@ -1,0 +1,8 @@
+:root{font-family:system-ui,sans-serif;color:#182330;background:#f6f7f9;line-height:1.7}
+body{margin:0}.shell{max-width:760px;margin:3rem auto;padding:1.5rem;background:white;border:1px solid #dce1e8;border-radius:12px}
+nav{display:flex;gap:1rem;border-bottom:1px solid #ddd;padding-bottom:1rem}a{color:#174ea6}h1{font-size:1.6rem}
+button,input,select{font:inherit}button{cursor:pointer;border:1px solid #9aa8b8;background:#edf3ff;padding:.35rem .7rem;border-radius:5px}
+input:not([type=checkbox]),select{padding:.35rem;border:1px solid #9aa8b8;border-radius:4px}form{margin:1rem 0;display:flex;gap:.5rem;flex-wrap:wrap}
+ul{padding:0;list-style:none}li{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid #eee}
+label{display:inline-flex;gap:.5rem;align-items:center}.done{text-decoration:line-through;color:#697586}:focus-visible{outline:3px solid #b45309;outline-offset:3px}
+[role=alert]{color:#a11515} @media(max-width:600px){.shell{margin:0;border-radius:0;padding:1rem}form{display:block}button{margin:.3rem}}

@@ -1,0 +1,31 @@
+{
+  "name": "study-notes-react18-ts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vite build --ssr src/smoke.tsx --outDir .test-build && node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.30.1",
+    "@reduxjs/toolkit": "2.6.1",
+    "react-redux": "9.2.0",
+    "zustand": "5.0.3"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5",
+    "vite": "8.3.5",
+    "@vitejs/plugin-react": "6.1.2"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}
