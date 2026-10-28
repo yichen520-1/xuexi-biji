@@ -1,13 +1,17 @@
 # Vue 2 响应式限制与 $set
 
-> 课程范围：P117 至最后（用户指定）。未取得视频逐集标题与字幕，本篇为自主编写的知识体系笔记，不代表逐集内容已核验。
+> **当前主线**：用户指定的 Vue3＋TS 71 集课程；本篇为主题对照与自主讲解，旧 Vue2 演示保留为迁移参考。
 > 示例版本：Vue 2.7.16（仅用于旧课程对照）；版本固定用于复现，不表示最新版本。
 
-## 学习目标与使用场景
+---
+
+<span style="background-color:rgb(255, 249, 227)">一：学习目标与使用场景</span>
 
 准确识别 Vue 2 新增对象属性和数组下标赋值的更新限制，并与 Vue 3 对照。
 
-## 先把原理讲清楚
+---
+
+<span style="background-color:rgb(255, 249, 227)">二：先把原理讲清楚</span>
 
 Vue 2 主要基于 Object.defineProperty 对已有属性建立 getter/setter。初始化时没有被处理的普通对象新属性，不会自动拥有相同拦截能力。直接写 user.age = 20，JavaScript 对象确实有了 age，但界面不一定因这一步自动更新。
 
@@ -17,11 +21,15 @@ Vue.set 或实例 $set 能为对象新增响应式属性。更简单的方式是
 
 演示响应式限制时要避免另一个状态变化“顺便触发重新渲染”，让非响应式新字段看起来正常。例如先直接添加 age，再点另一个响应式按钮，界面可能显示已添加 age，这不能证明第一次修改本身触发了更新。
 
-## 运行方式
+---
+
+<span style="background-color:rgb(255, 249, 227)">三：运行方式</span>
 
 直接打开同目录下的 [配套演示](示例/15-Vue2响应式限制与set.html)。运行库放在示例/vendor，已本地保存，普通示例不需要联网。Obsidian 的代码块用于阅读，不会自动执行 HTML。也可以把下面整段内容保存到示例目录中的新 HTML 文件；改变位置时需要相应调整运行库相对路径。
 
-## 完整代码演示
+---
+
+<span style="background-color:rgb(255, 249, 227)">四：完整代码演示</span>
 
 ```html
 <!doctype html>
@@ -53,20 +61,26 @@ new Vue({
 </html>
 ```
 
-## 按执行顺序解释
+---
+
+<span style="background-color:rgb(255, 249, 227)">五：按执行顺序解释</span>
 
 1. 初始 user 没有 age，模板用 undefined 判断提供可见占位。
 2. addAge 通过 $set 新增属性并通知依赖更新。
 3. splice(0,1,"Vue") 从索引 0 开始删除一项并插入 Vue。
 4. 例子中 key 使用下标只用于固定且不含内部状态的演示；真实可变列表仍应使用业务 ID。
 
-## 预期结果与验证步骤
+---
+
+<span style="background-color:rgb(255, 249, 227)">六：预期结果与验证步骤</span>
 
 点击添加年龄后立即显示 20；点击替换后第一项从 HTML 变为 Vue。
 
 操作时同时打开浏览器开发者工具：Elements 查看模板生成的节点，Console 查看是否有语法错误或 Vue 警告。若页面显示双大括号原文，优先检查运行库路径、脚本加载顺序和挂载目标。
 
-## 图解
+---
+
+<span style="background-color:rgb(255, 249, 227)">七：图解</span>
 
 ```mermaid
 flowchart TD
@@ -74,13 +88,17 @@ flowchart TD
   新增属性 --> set处理 --> 通知更新
 ```
 
-## 注意事项与易错点
+---
+
+<span style="background-color:rgb(255, 249, 227)">八：注意事项与易错点</span>
 
 - 不要先直接添加 age 再调用 $set 期待一定补救已经遗漏的观测；应从一开始就正确新增。
 - Vue 3 不再需要 $set，迁移时不要机械保留这个 API。
 - 优先完整声明业务字段，减少运行中动态扩展数据形状。
 
-## 动手练习
+---
+
+<span style="background-color:rgb(255, 249, 227)">九：动手练习</span>
 
 用替换整个 user 对象的方式新增 city 字段。
 
@@ -96,7 +114,9 @@ this.user = { ...this.user, city:'上海' };
 
 </details>
 
-## 复习问题
+---
+
+<span style="background-color:rgb(255, 249, 227)">十：复习问题</span>
 
 1. 本篇中哪些数据是真正的源状态，哪些是推导结果或 DOM 表示？
 2. 如果页面没有按预期更新，应该先检查运行环境、API 版本还是依赖关系？结合示例说明。
@@ -104,14 +124,33 @@ this.user = { ...this.user, city:'上海' };
 
 
 
-## 相关笔记
+---
+
+<span style="background-color:rgb(255, 249, 227)">十一：相关笔记</span>
 
 [[前端/VUE/14-Vue2与OptionsAPI完整示例|上一篇：Vue 2 与 Options API 完整示例]] · [[前端/VUE/16-VueRouter路由基础|下一篇：Vue Router 路由基础]] · [[前端/VUE/00-Vue学习索引]]
 
-## 官方参考与来源边界
+---
+
+<span style="background-color:rgb(255, 249, 227)">十二：官方参考与来源边界</span>
 
 - [Vue 3 中文指南](https://cn.vuejs.org/guide/introduction.html)
 - [Vue 2 中文指南](https://v2.cn.vuejs.org/v2/guide/)
 - [Vue 2 维护结束说明](https://v2.vuejs.org/eol/)
 
-以上文档用于核对 API 和版本差异；课程链接与集数只来自用户指定范围，未据此编造每集标题或台词。
+原有示例和参考继续保留；当前课程目录已另行核验。没有取得字幕，不将自主讲解声称为视频逐字内容。
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">专题深化：Vue2 限制来自另一套追踪机制</span>
+
+Vue2 主要借助属性访问器拦截已有属性，新增/删除属性以及部分数组索引/长度操作存在检测限制；Vue3 采用 Proxy 的核心机制，不能把 Vue.set 作为跨版本通用修复。
+
+旧项目增加对象属性可用 Vue.set/实例 $set 等对应 API；Vue3 的 reactive 代理可追踪这类写入，但若改的是原始对象而非代理，仍不能假定一切会更新。
+
+**迁移方法**：先判断当前运行的究竟是哪一版库，再定位写入发生在代理、原始对象还是普通副本。并非看到页面没更新就盲目添加 set。
+
+- [指定课程 P71](https://www.bilibili.com/video/BV1Za4y1r7KE/?p=71)
+- [[前端/VUE/00-课程目录与来源说明|已核验的完整分集目录与来源边界]]
+- [Vue 官方指南](https://vuejs.org/guide/introduction.html)
+- [Vue 与 TypeScript](https://vuejs.org/guide/typescript/composition-api.html)

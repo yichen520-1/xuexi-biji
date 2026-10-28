@@ -1,13 +1,17 @@
 # 条件渲染 v-if 与 v-show
 
-> 课程范围：P117 至最后（用户指定）。未取得视频逐集标题与字幕，本篇为自主编写的知识体系笔记，不代表逐集内容已核验。
+> **当前主线**：用户指定的 Vue3＋TS 71 集课程；本篇为主题对照与自主讲解，旧 Vue2 演示保留为迁移参考。
 > 示例版本：Vue 3.5.13；版本固定用于复现，不表示最新版本。
 
-## 学习目标与使用场景
+---
+
+<span style="background-color:rgb(255, 249, 227)">一：学习目标与使用场景</span>
 
 根据显示频率与组件生命周期选择条件渲染策略。
 
-## 先把原理讲清楚
+---
+
+<span style="background-color:rgb(255, 249, 227)">二：先把原理讲清楚</span>
 
 v-if 在条件为假时不创建对应 DOM 或组件，条件变真时才挂载。切换条件会触发销毁与重建，因此内部输入值、组件状态和副作用都可能重新开始。它适合权限区块、尚未加载的内容或很少切换的面板。
 
@@ -17,11 +21,15 @@ v-else-if 和 v-else 必须紧跟对应分支，形成完整条件链。需要�
 
 当同一元素既有 v-if 又有 v-for 时，不同 Vue 版本的优先级存在差异，也会影响别名能否被访问。可维护的做法是先用 computed 筛选列表，或把条件放到外层 template，使条件与循环职责清楚。
 
-## 运行方式
+---
+
+<span style="background-color:rgb(255, 249, 227)">三：运行方式</span>
 
 直接打开同目录下的 [配套演示](示例/05-条件渲染v-if与v-show.html)。运行库放在示例/vendor，已本地保存，普通示例不需要联网。Obsidian 的代码块用于阅读，不会自动执行 HTML。也可以把下面整段内容保存到示例目录中的新 HTML 文件；改变位置时需要相应调整运行库相对路径。
 
-## 完整代码演示
+---
+
+<span style="background-color:rgb(255, 249, 227)">四：完整代码演示</span>
 
 ```html
 <!doctype html>
@@ -50,20 +58,26 @@ createApp({ setup() {
 </html>
 ```
 
-## 按执行顺序解释
+---
+
+<span style="background-color:rgb(255, 249, 227)">五：按执行顺序解释</span>
 
 1. visible 初始为 true，两个面板都被展示。
 2. 两个 input 没有 v-model，文本保存在各自 DOM 节点上，用来观察节点是否被销毁。
 3. 切换到 false 后，v-if 面板移除，v-show 面板仍存在但 display 为 none。
 4. 再次显示时，v-if 输入值消失，v-show 输入值仍保留。若加了 v-model 并保留外部状态，两者都可恢复值。
 
-## 预期结果与验证步骤
+---
+
+<span style="background-color:rgb(255, 249, 227)">六：预期结果与验证步骤</span>
 
 在两个输入框分别输入文字，再连续切换两次，能直接比较重建 DOM 和隐藏 DOM 的差别。
 
 操作时同时打开浏览器开发者工具：Elements 查看模板生成的节点，Console 查看是否有语法错误或 Vue 警告。若页面显示双大括号原文，优先检查运行库路径、脚本加载顺序和挂载目标。
 
-## 图解
+---
+
+<span style="background-color:rgb(255, 249, 227)">七：图解</span>
 
 ```mermaid
 flowchart TD
@@ -71,13 +85,17 @@ flowchart TD
   条件判断 -->|v-show| 修改display
 ```
 
-## 注意事项与易错点
+---
+
+<span style="background-color:rgb(255, 249, 227)">八：注意事项与易错点</span>
 
 - 不要用 v-show 保护可能为 null 的深层属性访问。
 - 不要把 CSS 隐藏当成安全控制；服务端仍须进行权限校验。
 - v-if 的成本取决于子树大小，不要机械认为某个指令永远更快。
 
-## 动手练习
+---
+
+<span style="background-color:rgb(255, 249, 227)">九：动手练习</span>
 
 加入加载中、加载失败、成功三种互斥状态，并用分支链显示。
 
@@ -94,7 +112,9 @@ flowchart TD
 
 </details>
 
-## 复习问题
+---
+
+<span style="background-color:rgb(255, 249, 227)">十：复习问题</span>
 
 1. 本篇中哪些数据是真正的源状态，哪些是推导结果或 DOM 表示？
 2. 如果页面没有按预期更新，应该先检查运行环境、API 版本还是依赖关系？结合示例说明。
@@ -102,14 +122,33 @@ flowchart TD
 
 
 
-## 相关笔记
+---
+
+<span style="background-color:rgb(255, 249, 227)">十一：相关笔记</span>
 
 [[前端/VUE/04-v-model与表单绑定|上一篇：v-model 与表单绑定]] · [[前端/VUE/06-列表渲染与稳定key|下一篇：列表渲染与稳定 key]] · [[前端/VUE/00-Vue学习索引]]
 
-## 官方参考与来源边界
+---
+
+<span style="background-color:rgb(255, 249, 227)">十二：官方参考与来源边界</span>
 
 - [Vue 3 中文指南](https://cn.vuejs.org/guide/introduction.html)
 - [Vue 2 中文指南](https://v2.cn.vuejs.org/v2/guide/)
 - [Vue 2 维护结束说明](https://v2.vuejs.org/eol/)
 
-以上文档用于核对 API 和版本差异；课程链接与集数只来自用户指定范围，未据此编造每集标题或台词。
+原有示例和参考继续保留；当前课程目录已另行核验。没有取得字幕，不将自主讲解声称为视频逐字内容。
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">专题深化：条件切换的生命周期成本</span>
+
+`v-if` 决定是否建立/销毁一段组件树，`v-show` 主要控制已有元素的 display。前者会影响子组件状态与生命周期，后者通常保留组件实例。选择依据是状态保留与切换频率，而不只是代码长度。
+
+**边界例子**：隐藏表单后再显示，若要求保留未提交输入，v-show 可能符合预期；如果要求每次进入都重新初始化，可用 v-if 或显式重置状态。
+
+`v-if` 与 `v-for` 同放一个元素时有优先级及作用域问题。先用 computed 得到过滤列表，再循环渲染，通常比把条件挤在同一标签更清楚。此基础专题是自主补充，课程目录未单列同名分集。
+
+- [指定课程 P5](https://www.bilibili.com/video/BV1Za4y1r7KE/?p=5)
+- [[前端/VUE/00-课程目录与来源说明|已核验的完整分集目录与来源边界]]
+- [Vue 官方指南](https://vuejs.org/guide/introduction.html)
+- [Vue 与 TypeScript](https://vuejs.org/guide/typescript/composition-api.html)

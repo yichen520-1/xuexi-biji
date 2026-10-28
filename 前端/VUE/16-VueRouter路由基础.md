@@ -1,13 +1,17 @@
 # Vue Router 路由基础
 
-> 课程范围：P117 至最后（用户指定）。未取得视频逐集标题与字幕，本篇为自主编写的知识体系笔记，不代表逐集内容已核验。
+> **当前主线**：用户指定的 Vue3＋TS 71 集课程；本篇为主题对照与自主讲解，旧 Vue2 演示保留为迁移参考。
 > 示例版本：Vue 3.5.13；版本固定用于复现，不表示最新版本。
 
-## 学习目标与使用场景
+---
+
+<span style="background-color:rgb(255, 249, 227)">一：学习目标与使用场景</span>
 
 理解单页应用路由，并在无需服务器回退配置的 hash 模式中运行示例。
 
-## 先把原理讲清楚
+---
+
+<span style="background-color:rgb(255, 249, 227)">二：先把原理讲清楚</span>
 
 前端路由把 URL 与组件对应起来。点击导航时，路由器更新当前地址和展示组件，通常不会重新请求整份 HTML。RouterLink 负责导航，RouterView 是当前路由组件显示的位置，这两个名字表达的是不同职责。
 
@@ -17,11 +21,15 @@ hash 模式把路径放在 # 后面，例如 #/about，适合双击 HTML 的学�
 
 路由参数来自 URL，应当按外部输入处理。读取参数时注意类型通常是字符串，且用户可以随意修改。导航守卫可改善前端流程，但后端权限验证不能依赖前端路由是否允许进入页面。
 
-## 运行方式
+---
+
+<span style="background-color:rgb(255, 249, 227)">三：运行方式</span>
 
 直接打开同目录下的 [配套演示](示例/16-VueRouter路由基础.html)。运行库放在示例/vendor，已本地保存，普通示例不需要联网。Obsidian 的代码块用于阅读，不会自动执行 HTML。也可以把下面整段内容保存到示例目录中的新 HTML 文件；改变位置时需要相应调整运行库相对路径。
 
-## 完整代码演示
+---
+
+<span style="background-color:rgb(255, 249, 227)">四：完整代码演示</span>
 
 ```html
 <!doctype html>
@@ -54,33 +62,43 @@ createApp({}).use(router).mount('#app');
 </html>
 ```
 
-## 按执行顺序解释
+---
+
+<span style="background-color:rgb(255, 249, 227)">五：按执行顺序解释</span>
 
 1. 本页除了 Vue 运行库，还加载本地 Vue Router 4 运行库。
 2. routes 数组声明路径与组件的映射，RouterView 根据当前匹配结果显示对应组件。
 3. use(router) 安装路由插件并提供组件与路由状态。
 4. 点击关于后地址出现 #/about，刷新仍能找到同一个本地 HTML 文件。
 
-## 预期结果与验证步骤
+---
+
+<span style="background-color:rgb(255, 249, 227)">六：预期结果与验证步骤</span>
 
 点击首页或关于，只有路由内容切换，地址的 hash 随之改变。
 
 操作时同时打开浏览器开发者工具：Elements 查看模板生成的节点，Console 查看是否有语法错误或 Vue 警告。若页面显示双大括号原文，优先检查运行库路径、脚本加载顺序和挂载目标。
 
-## 图解
+---
+
+<span style="background-color:rgb(255, 249, 227)">七：图解</span>
 
 ```mermaid
 flowchart TD
   URL变化 --> 路由匹配 --> RouterView --> 对应组件
 ```
 
-## 注意事项与易错点
+---
+
+<span style="background-color:rgb(255, 249, 227)">八：注意事项与易错点</span>
 
 - 路由组件内 useRoute/useRouter 需要路由上下文，不能在任意全局位置随意调用。
 - hash 演示可以本地打开；history 部署必须正确配置服务端回退。
 - 路由参数不等于可信业务数据，敏感资源仍须后端鉴权。
 
-## 动手练习
+---
+
+<span style="background-color:rgb(255, 249, 227)">九：动手练习</span>
 
 添加 /notes 页面，导航栏增加笔记链接。
 
@@ -96,7 +114,9 @@ flowchart TD
 
 </details>
 
-## 复习问题
+---
+
+<span style="background-color:rgb(255, 249, 227)">十：复习问题</span>
 
 1. 本篇中哪些数据是真正的源状态，哪些是推导结果或 DOM 表示？
 2. 如果页面没有按预期更新，应该先检查运行环境、API 版本还是依赖关系？结合示例说明。
@@ -104,15 +124,34 @@ flowchart TD
 
 
 
-## 相关笔记
+---
+
+<span style="background-color:rgb(255, 249, 227)">十一：相关笔记</span>
 
 [[前端/VUE/15-Vue2响应式限制与set|上一篇：Vue 2 响应式限制与 $set]] · [[前端/VUE/17-共享状态与provide-inject|下一篇：共享状态与 provide/inject]] · [[前端/VUE/00-Vue学习索引]]
 
-## 官方参考与来源边界
+---
+
+<span style="background-color:rgb(255, 249, 227)">十二：官方参考与来源边界</span>
 
 - [Vue 3 中文指南](https://cn.vuejs.org/guide/introduction.html)
 - [Vue 2 中文指南](https://v2.cn.vuejs.org/v2/guide/)
 - [Vue 2 维护结束说明](https://v2.vuejs.org/eol/)
 - [Vue Router 指南](https://router.vuejs.org/zh/guide/)
 
-以上文档用于核对 API 和版本差异；课程链接与集数只来自用户指定范围，未据此编造每集标题或台词。
+原有示例和参考继续保留；当前课程目录已另行核验。没有取得字幕，不将自主讲解声称为视频逐字内容。
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">专题深化：路由对象与当前路由是两种角色</span>
+
+`useRouter` 取得导航能力，`useRoute` 取得当前匹配状态。query 常用于筛选搜索，params 关联路由路径占位；用命名路由与 params 组合时要让配置存在对应动态段。
+
+复用同一个页面组件而参数变化时，组件未必重新挂载。监视 `route.params.id` 等真实依赖，或使用合适的路由更新机制，不能只在 onMounted 请求一次。
+
+history 模式部署需要服务器对应用路径回退到入口文件；hash 模式使用片段路由。打包成功不代表刷新深层地址也能访问，部署必须验证这一点。
+
+- [指定课程 P30—P42](https://www.bilibili.com/video/BV1Za4y1r7KE/?p=30)
+- [[前端/VUE/00-课程目录与来源说明|已核验的完整分集目录与来源边界]]
+- [Vue 官方指南](https://vuejs.org/guide/introduction.html)
+- [Vue 与 TypeScript](https://vuejs.org/guide/typescript/composition-api.html)

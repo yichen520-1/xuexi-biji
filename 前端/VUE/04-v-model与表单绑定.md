@@ -1,13 +1,17 @@
 # v-model 与表单绑定
 
-> 课程范围：P117 至最后（用户指定）。未取得视频逐集标题与字幕，本篇为自主编写的知识体系笔记，不代表逐集内容已核验。
+> **当前主线**：用户指定的 Vue3＋TS 71 集课程；本篇为主题对照与自主讲解，旧 Vue2 演示保留为迁移参考。
 > 示例版本：Vue 3.5.13；版本固定用于复现，不表示最新版本。
 
-## 学习目标与使用场景
+---
+
+<span style="background-color:rgb(255, 249, 227)">一：学习目标与使用场景</span>
 
 掌握文本、复选框、单选和选择框的数据绑定，以及 trim、number、lazy 的适用场景。
 
-## 先把原理讲清楚
+---
+
+<span style="background-color:rgb(255, 249, 227)">二：先把原理讲清楚</span>
 
 v-model 是表单值绑定和输入事件监听的语法糖，不是一个把任意元素都变成可编辑的万能指令。普通文本框通常对应 value 与 input；复选框对应 checked 与 change。不同原生控件的绑定规则由 Vue 处理。
 
@@ -17,11 +21,15 @@ v-model 是表单值绑定和输入事件监听的语法糖，不是一个把任
 
 Vue 在输入法组合输入期间通常会等待 composition 完成再同步状态，这是为了避免拼音输入时不断截断候选。即时搜索等需求应了解输入法行为，不要误把正常延迟当成响应式失效。
 
-## 运行方式
+---
+
+<span style="background-color:rgb(255, 249, 227)">三：运行方式</span>
 
 直接打开同目录下的 [配套演示](示例/04-v-model与表单绑定.html)。运行库放在示例/vendor，已本地保存，普通示例不需要联网。Obsidian 的代码块用于阅读，不会自动执行 HTML。也可以把下面整段内容保存到示例目录中的新 HTML 文件；改变位置时需要相应调整运行库相对路径。
 
-## 完整代码演示
+---
+
+<span style="background-color:rgb(255, 249, 227)">四：完整代码演示</span>
 
 ```html
 <!doctype html>
@@ -56,33 +64,43 @@ createApp({ setup() {
 </html>
 ```
 
-## 按执行顺序解释
+---
+
+<span style="background-color:rgb(255, 249, 227)">五：按执行顺序解释</span>
 
 1. name、age、skills 分别是字符串、数字、数组，模型形状由业务定义。
 2. 两个复选框共享 skills，勾选时把各自 value 加入数组，取消时移除。
 3. submit 先校验年龄，再序列化预览；JSON.stringify 的第三个参数 2 提供缩进。
 4. required 和 min 由浏览器原生校验处理；真实后端收到数据后还必须再次校验。
 
-## 预期结果与验证步骤
+---
+
+<span style="background-color:rgb(255, 249, 227)">六：预期结果与验证步骤</span>
 
 输入姓名和年龄，勾选 HTML 后预览包含 skills: ["HTML"]；同时勾选 Vue 后数组有两项。
 
 操作时同时打开浏览器开发者工具：Elements 查看模板生成的节点，Console 查看是否有语法错误或 Vue 警告。若页面显示双大括号原文，优先检查运行库路径、脚本加载顺序和挂载目标。
 
-## 图解
+---
+
+<span style="background-color:rgb(255, 249, 227)">七：图解</span>
 
 ```mermaid
 flowchart TD
   用户输入 --> 控件事件 --> 模型值更新 --> 校验 --> 提交或提示
 ```
 
-## 注意事项与易错点
+---
+
+<span style="background-color:rgb(255, 249, 227)">八：注意事项与易错点</span>
 
 - v-model 的初始值以 JavaScript 状态为准，不以静态 value 属性为准。
 - 不要在复杂表单里同时手动设置 value 又用 v-model 控制同一输入框。
 - 组件上的 v-model 与原生输入不同；Vue 2 和 Vue 3 默认 props/事件名称不同，见通信专题。
 
-## 动手练习
+---
+
+<span style="background-color:rgb(255, 249, 227)">九：动手练习</span>
 
 增加“城市”选择框，并把选择结果加入预览 JSON。
 
@@ -98,7 +116,9 @@ const city = ref('上海'); // 返回 city，并加入 submit 的对象
 
 </details>
 
-## 复习问题
+---
+
+<span style="background-color:rgb(255, 249, 227)">十：复习问题</span>
 
 1. 本篇中哪些数据是真正的源状态，哪些是推导结果或 DOM 表示？
 2. 如果页面没有按预期更新，应该先检查运行环境、API 版本还是依赖关系？结合示例说明。
@@ -106,14 +126,33 @@ const city = ref('上海'); // 返回 city，并加入 submit 的对象
 
 
 
-## 相关笔记
+---
+
+<span style="background-color:rgb(255, 249, 227)">十一：相关笔记</span>
 
 [[前端/VUE/03-事件绑定与修饰符|上一篇：事件绑定与修饰符]] · [[前端/VUE/05-条件渲染v-if与v-show|下一篇：条件渲染 v-if 与 v-show]] · [[前端/VUE/00-Vue学习索引]]
 
-## 官方参考与来源边界
+---
+
+<span style="background-color:rgb(255, 249, 227)">十二：官方参考与来源边界</span>
 
 - [Vue 3 中文指南](https://cn.vuejs.org/guide/introduction.html)
 - [Vue 2 中文指南](https://v2.cn.vuejs.org/v2/guide/)
 - [Vue 2 维护结束说明](https://v2.vuejs.org/eol/)
 
-以上文档用于核对 API 和版本差异；课程链接与集数只来自用户指定范围，未据此编造每集标题或台词。
+原有示例和参考继续保留；当前课程目录已另行核验。没有取得字幕，不将自主讲解声称为视频逐字内容。
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">专题深化：表单与组件 v-model 的两种场景</span>
+
+**v-model 是数据和事件的配套协议**，不是绕开单向数据流的秘密通道。原生输入框的绑定需理解 value/checked 与输入事件；自定义组件默认对应 `modelValue` prop 与 `update:modelValue` 事件。
+
+Vue3.4+ 的 `defineModel` 可简化这个协议，但旧课程可能使用显式 props/emits，两者应能互相翻译。输入值、提交值、后端类型也应分开：数字输入和 `.number` 不代表所有异常输入都变成合法有限数。
+
+**练习思路**：金额输入先保留字符串以支持正在输入的中间状态，提交时再解析、校验范围，转换成整数分。不要在每次按键时过度格式化导致光标跳动。
+
+- [指定课程 P55—P56](https://www.bilibili.com/video/BV1Za4y1r7KE/?p=55)
+- [[前端/VUE/00-课程目录与来源说明|已核验的完整分集目录与来源边界]]
+- [Vue 官方指南](https://vuejs.org/guide/introduction.html)
+- [Vue 与 TypeScript](https://vuejs.org/guide/typescript/composition-api.html)

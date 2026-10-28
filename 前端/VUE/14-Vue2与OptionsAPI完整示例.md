@@ -1,13 +1,17 @@
 # Vue 2 与 Options API 完整示例
 
-> 课程范围：P117 至最后（用户指定）。未取得视频逐集标题与字幕，本篇为自主编写的知识体系笔记，不代表逐集内容已核验。
+> **当前主线**：用户指定的 Vue3＋TS 71 集课程；本篇为主题对照与自主讲解，旧 Vue2 演示保留为迁移参考。
 > 示例版本：Vue 2.7.16（仅用于旧课程对照）；版本固定用于复现，不表示最新版本。
 
-## 学习目标与使用场景
+---
+
+<span style="background-color:rgb(255, 249, 227)">一：学习目标与使用场景</span>
 
 认识 data、methods、computed、watch 和生命周期，并理解 Options API 不等于过时语法。
 
-## 先把原理讲清楚
+---
+
+<span style="background-color:rgb(255, 249, 227)">二：先把原理讲清楚</span>
 
 Options API 按职责分类组织组件：data 保存状态，methods 放操作，computed 放派生数据，watch 监听变化，mounted 等钩子处理生命周期。学习旧课程时，先找到每段代码属于哪个选项，通常比逐行记忆更容易理解。
 
@@ -17,11 +21,15 @@ Vue 2 通过 new Vue 初始化根实例，el 指定挂载点；组件中的 data
 
 Vue 3 仍支持 Options API。版本与代码风格是两个维度：Vue 3 可以写 data/methods，也可以写 setup；Vue 2.7 有部分组合式能力。判断版本要看依赖和初始化方式，不能看到 methods 就说是 Vue 2。Vue 2 已结束官方维护，旧版笔记用于看懂课程和维护存量项目。
 
-## 运行方式
+---
+
+<span style="background-color:rgb(255, 249, 227)">三：运行方式</span>
 
 直接打开同目录下的 [配套演示](示例/14-Vue2与OptionsAPI完整示例.html)。运行库放在示例/vendor，已本地保存，普通示例不需要联网。Obsidian 的代码块用于阅读，不会自动执行 HTML。也可以把下面整段内容保存到示例目录中的新 HTML 文件；改变位置时需要相应调整运行库相对路径。
 
-## 完整代码演示
+---
+
+<span style="background-color:rgb(255, 249, 227)">四：完整代码演示</span>
 
 ```html
 <!doctype html>
@@ -54,20 +62,26 @@ new Vue({
 </html>
 ```
 
-## 按执行顺序解释
+---
+
+<span style="background-color:rgb(255, 249, 227)">五：按执行顺序解释</span>
 
 1. data 返回每个实例自己的状态对象。
 2. computed.filtered 读取 courses 和 keyword，输出筛选结果。
 3. watch 不负责生成结果，只记录关键词变化后的提示信息。
 4. reset 使用普通方法语法，因此 this.keyword 指向当前实例字段。
 
-## 预期结果与验证步骤
+---
+
+<span style="background-color:rgb(255, 249, 227)">六：预期结果与验证步骤</span>
 
 页面初始显示四门课程，输入 css 后仅显示 CSS，点击重置恢复四项。
 
 操作时同时打开浏览器开发者工具：Elements 查看模板生成的节点，Console 查看是否有语法错误或 Vue 警告。若页面显示双大括号原文，优先检查运行库路径、脚本加载顺序和挂载目标。
 
-## 图解
+---
+
+<span style="background-color:rgb(255, 249, 227)">七：图解</span>
 
 ```mermaid
 flowchart TD
@@ -75,13 +89,17 @@ flowchart TD
   用户事件 --> methods --> data状态
 ```
 
-## 注意事项与易错点
+---
+
+<span style="background-color:rgb(255, 249, 227)">八：注意事项与易错点</span>
 
 - 此页必须使用 Vue 2.7.16 运行库，不能混用 Vue 3 createApp。
 - Vue 2 生命周期销毁钩子为 beforeDestroy 和 destroyed，Vue 3 为 beforeUnmount 和 unmounted。
 - Vue 2 已于 2023-12-31 结束官方维护；新项目优先考虑仍维护的技术方案。
 
-## 动手练习
+---
+
+<span style="background-color:rgb(255, 249, 227)">九：动手练习</span>
 
 增加一个区分大小写的复选框，并让计算属性根据它筛选。
 
@@ -98,7 +116,9 @@ flowchart TD
 
 </details>
 
-## 复习问题
+---
+
+<span style="background-color:rgb(255, 249, 227)">十：复习问题</span>
 
 1. 本篇中哪些数据是真正的源状态，哪些是推导结果或 DOM 表示？
 2. 如果页面没有按预期更新，应该先检查运行环境、API 版本还是依赖关系？结合示例说明。
@@ -106,14 +126,33 @@ flowchart TD
 
 
 
-## 相关笔记
+---
+
+<span style="background-color:rgb(255, 249, 227)">十一：相关笔记</span>
 
 [[前端/VUE/13-ref-reactive与组合式API|上一篇：ref、reactive 与组合式 API]] · [[前端/VUE/15-Vue2响应式限制与set|下一篇：Vue 2 响应式限制与 $set]] · [[前端/VUE/00-Vue学习索引]]
 
-## 官方参考与来源边界
+---
+
+<span style="background-color:rgb(255, 249, 227)">十二：官方参考与来源边界</span>
 
 - [Vue 3 中文指南](https://cn.vuejs.org/guide/introduction.html)
 - [Vue 2 中文指南](https://v2.cn.vuejs.org/v2/guide/)
 - [Vue 2 维护结束说明](https://v2.vuejs.org/eol/)
 
-以上文档用于核对 API 和版本差异；课程链接与集数只来自用户指定范围，未据此编造每集标题或台词。
+原有示例和参考继续保留；当前课程目录已另行核验。没有取得字幕，不将自主讲解声称为视频逐字内容。
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">专题深化：旧 API 留作迁移，不混版本</span>
+
+Options API 的 data、methods、computed 按选项归类；Composition API 按业务逻辑组织依赖。二者并非“一个能响应式、一个不能”，也不是代码越少越先进。迁移先保持行为，再逐步提取逻辑。
+
+Vue2 示例的 `new Vue`、实例全局 API 与 Vue3 的 createApp 不应混在同一段代码中。Vue2 的 this 与 setup 的上下文也不同，setup 中不能把 this 当作组件实例访问。
+
+本篇保留的 Vue2 演示用于读旧项目；新主线参考 Vue3 课程与本目录的 TS 工程，避免将 Vue2 写法当作新项目默认方案。
+
+- [指定课程 P6、P9、P27、P71](https://www.bilibili.com/video/BV1Za4y1r7KE/?p=6)
+- [[前端/VUE/00-课程目录与来源说明|已核验的完整分集目录与来源边界]]
+- [Vue 官方指南](https://vuejs.org/guide/introduction.html)
+- [Vue 与 TypeScript](https://vuejs.org/guide/typescript/composition-api.html)
