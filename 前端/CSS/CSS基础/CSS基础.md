@@ -1,4 +1,37 @@
-# CSS基础选择器
+# CSS基础
+
+本页是基础学习目录，原有选择器内容保留在文末。优先按以下路线打开对应专题，不再把“基础”误当成只讲选择器。
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">一：先把规则作用到页面</span>
+
+1. [[前端/CSS/CSS基础/CSS引入与基本语法|CSS引入与基本语法]]：样式表、规则、声明和 DevTools
+2. [[前端/CSS/CSS基础/CSS选择器|CSS选择器]]：基础 → 关系 → 属性与各类伪类/伪元素
+3. [[前端/CSS/CSS基础/CSS三大特性|CSS三大特性]]：理解层叠、继承与优先级；不要只背最后出现的规则
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">二：文字与显示行为</span>
+
+4. [[前端/CSS/CSS基础/CSS字体样式|CSS字体样式]]：先认识单项字体属性
+5. [[前端/CSS/CSS基础/CSSfont简写属性|CSSfont简写属性]]：掌握单项后再用简写
+6. [[前端/CSS/CSS基础/CSS文本布局|CSS文本布局]]：对齐、行高与文字排布
+7. [[前端/CSS/CSS基础/CSS鼠标样式|CSS鼠标样式]]：简单交互反馈
+8. [[前端/CSS/CSS基础/CSS元素显示模式（display）的转换|CSS元素显示模式（display）的转换]]：区分 block、inline、inline-block 等基本行为
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">三：建立盒子与练习</span>
+
+9. [[前端/CSS/CSS基础/CSS盒子模型|CSS盒子模型]]：边框 → padding → margin → 尺寸计算 → 装饰
+10. [[前端/CSS/CSS基础/CSS画盒子案例--网页基本布局|CSS画盒子案例--网页基本布局]]：用盒模型理解页面分区，再进入现代布局
+
+[[前端/CSS/CSS|返回CSS总学习路线]]
+
+---
+
+<span style="background-color:rgb(255, 249, 227)">补充：原有基础选择器讲解（完整保留）</span>
 
 一：概念
 
